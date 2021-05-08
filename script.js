@@ -13,7 +13,7 @@ class Game {
 
   initialize() {
     btnStart.classList.add("hide");
-    this.level = 1;
+    this.level = 7;
     this.colores = {
       blue,
       purple,
@@ -48,7 +48,7 @@ class Game {
   lightSequence() {
     for (let i = 0; i < this.level; i++) {
       const color = this.transformNumberToColor(this.sequence[i]);
-      this.light(color);
+      setTimeout(() => this.light(color), i * 1000);
     }
   }
 
