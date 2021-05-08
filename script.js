@@ -8,6 +8,7 @@ class Game {
   constructor() {
     this.initialize();
     this.generateSequence();
+    this.nextLevel();
   }
 
   initialize() {
@@ -26,6 +27,38 @@ class Game {
       .fill(0)
       .map((n) => Math.floor(Math.random() * 4), 0, 10);
     console.log(this.sequence);
+  }
+
+  nextLevel() {
+    this.lightSequence();
+  }
+
+  transformNumberToColor(number) {
+    switch (number) {
+      case 0:
+        return "blue";
+      case 1:
+        return "purple";
+      case 2:
+        return "orange";
+      case 3:
+        return "green";
+    }
+  }
+  lightSequence() {
+    for (let i = 0; i < this.level; i++) {
+      const color = this.transformNumberToColor(this.sequence[i]);
+      this.light(color);
+    }
+  }
+
+  light(color) {
+    this.colores[color].classList.add("light");
+    setTimeout(() => this.turnOffLight(color), 350);
+  }
+
+  turnOffLight(color) {
+    this.colores[color].classList.remove("light");
   }
 }
 
