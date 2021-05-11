@@ -17,7 +17,7 @@ class Game {
   initialize() {
     this.nextLevel = this.nextLevel.bind(this);
     this.chooseColor = this.chooseColor.bind(this);
-    btnStart.classList.add("hide");
+    this.toggleBtnStart();
     this.level = 1;
     this.colores = {
       blue,
@@ -27,11 +27,18 @@ class Game {
     };
   }
 
+  toggleBtnStart() {
+    if (btnStart.classList.contains("hide")) {
+      btnStart.classList.remove("hide");
+    } else {
+      btnStart.classList.add("hide");
+    }
+  }
+
   generateSequence() {
     this.sequence = new Array(LAST_LEVEL)
       .fill(0)
       .map((n) => Math.floor(Math.random() * 4), 0, LAST_LEVEL);
-    console.log(this.sequence);
   }
 
   nextLevel() {
@@ -106,14 +113,27 @@ class Game {
         this.level++;
         this.removeClickEvents();
         if (this.level === LAST_LEVEL + 1) {
-          // won
+          this.wonTheGame();
         } else {
           setTimeout(this.nextLevel, 1500);
         }
       }
     } else {
-      // lose
+      this.loseTheGame();
     }
+  }
+
+  wonTheGame() {
+    swal("Good job!", "You won the game!", "success").then(() => {
+      this.initialize();
+    });
+  }
+
+  loseTheGame() {
+    swal("Try again", "Sorry you lose game :(", "error").then(() => {
+      this.removeClickEvents();
+      this.initialize();
+    });
   }
 }
 
